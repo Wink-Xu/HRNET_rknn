@@ -15,6 +15,7 @@ wheels/
 
 # pytorch/python/numpy formats
 *.pth
+*.onnx
 *.pkl
 *.npy
 *.ts
