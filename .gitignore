@@ -1,6 +1,6 @@
 
 logs
-
+output/
 # compilation and distribution
 __pycache__
 _ext
@@ -16,6 +16,7 @@ wheels/
 # pytorch/python/numpy formats
 *.pth
 *.onnx
+*.rknn
 *.pkl
 *.npy
 *.ts

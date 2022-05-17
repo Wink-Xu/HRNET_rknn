@@ -164,10 +164,10 @@ def main():
         preds, maxvals = get_final_preds(
             cfg, output.clone().cpu().numpy(), c, s)
         pred, _ = get_max_preds(output.clone().cpu().numpy())
+        print(pred*4)
         all_preds[idx:idx + num_images, :, 0:2] = preds[:, :, 0:2]
         all_preds[idx:idx + num_images, :, 2:3] = maxvals
-        import pdb 
-        pdb.set_trace()
+     
         idx += num_images
         
         prefix = image_file[:-4]

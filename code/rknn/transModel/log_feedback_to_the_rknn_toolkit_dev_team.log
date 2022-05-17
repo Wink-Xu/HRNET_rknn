@@ -1,0 +1,10 @@
+D Using CPPUTILS: True
+D target set by user is: None
+D Starting ntp or adb, target is None, host is None
+E Catch exception when init runtime!
+E Traceback (most recent call last):
+E   File "rknn/api/rknn_base.py", line 897, in rknn.api.rknn_base.RKNNBase.init_runtime
+E   File "rknn/api/rknn_runtime.py", line 341, in rknn.api.rknn_runtime.RKNNRuntime.build_graph
+E Exception: RKNN init failed. error code: RKNN_ERR_MODEL_INVALID
+E Please feedback the detailed log file <log_feedback_to_the_rknn_toolkit_dev_team.log> to the RKNN Toolkit development team.
+E You can also check github issues: https://github.com/rockchip-linux/rknn-toolkit/issues
