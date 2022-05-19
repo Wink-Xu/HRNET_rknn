@@ -1,4 +1,4 @@
-## HRNet 
+## HRNet run on rv1126
 
 * test_one_image 
 
@@ -18,19 +18,19 @@ python to_onnx.py \
     TEST.MODEL_FILE ../model/pose_hrnet_w32_256x192.pth \
 ```
 
-* onnx to rknn and check the result
+* onnx to rknn and check the result  
 rknn-toolkit
 https://github.com/rockchip-linux/rknn-toolkit  
-download the rknn-tookit docker images
-
+download the rknn-tookit docker images  
+(HRNET running with the rknn-toolkit emulator will give an error,  running on device is okay)
 ```
 1. prepare the quant data in dataset.txt
 2. cd code/rknn/transModel
    python to_rknn.py --transModel
 ```
 
-* inference rknn using C API
-https://github.com/rockchip-linux/rknpu/tree/master/rknn/doc
+* inference rknn using C API  
+https://github.com/rockchip-linux/rknpu/tree/master/rknn/doc  
 need to configure the compile environment follow the doc, and run the code on the device 
 ```
 cd code/rknn/inference/rknn_hrnet
@@ -38,4 +38,6 @@ cd code/rknn/inference/rknn_hrnet
 tar the "install" directory, move to the device
 ./rknn_hrnet ./model/pose_hrnet_w32_256x192.rknn ./model/test1.jpg
 ```
+
+* Wrapping the C API
 

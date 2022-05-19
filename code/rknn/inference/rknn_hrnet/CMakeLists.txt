@@ -31,7 +31,7 @@ else()
 endif()
 find_package(OpenCV REQUIRED)
 
-#add_definitions(-D ctime)
+#add_definitions(-D pTime)
 
 set(CMAKE_INSTALL_RPATH "lib")
 

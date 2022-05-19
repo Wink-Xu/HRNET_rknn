@@ -11,22 +11,17 @@ modify `GCC_COMPILER` on `build.sh` for target platform, then execute
 connect device and push build output into `/userdata`
 
 ```
-adb push install/rknn_mobilenet_demo /userdata/
+adb push install/rknn_hrnet /userdata/
 ```
 
 ## run
 
 ```
 adb shell
-cd /userdata/rknn_mobilenet_demo/
+cd /userdata/rknn_hrnet/
 ```
 
-- rk180x
+- rv1126
 ```
-./rknn_mobilenet_demo model/mobilenet_v1_rk180x.rknn model/dog_224x224.jpg
-```
-
-- rv1109/rv1126
-```
-./rknn_mobilenet_demo model/mobilenet_v1_rv1109_rv1126.rknn model/dog_224x224.jpg
+./rknn_hrnet model/pose_hrnet_w32_256x192.rknn model/test.jpg
 ```

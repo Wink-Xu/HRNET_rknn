@@ -171,8 +171,9 @@ static unsigned char *load_image(const char *image_path, rknn_tensor_attr *input
 int main(int argc, char **argv)
 {
 
-#ifdef ctime
-    clock_t start = clock();
+#ifdef pTime
+    struct  timeval tv_1, tv_2, tv_3, tv_4, tv_5, tv_6;
+    gettimeofday(&tv_1,NULL);
 #endif
     rknn_context ctx;
     int ret;
@@ -191,10 +192,9 @@ int main(int argc, char **argv)
         printf("rknn_init fail! ret=%d\n", ret);
         return -1;
     }
-#ifdef ctime
-    clock_t after_load_model = clock();
-    double time = (double) (after_load_model-start) / CLOCKS_PER_SEC * 1000.0;
-    printf("##### Model load time : %.2f ms\n", time);
+#ifdef pTime
+    gettimeofday(&tv_2,NULL);
+    printf("\n load_model = %.2f ms\n", (float)((tv_2.tv_sec - tv_1.tv_sec)*1000 + (tv_2.tv_usec - tv_1.tv_usec)*0.001));
 #endif
     // Get Model Input Output Info
     rknn_input_output_num io_num;
@@ -237,7 +237,7 @@ int main(int argc, char **argv)
         printRKNNTensor(&(output_attrs[i]));
     }
 
-#ifndef ctime
+#ifndef pTime
     // Load image
     cv::Mat orig_img = imread(img_path, cv::IMREAD_COLOR);
     if(!orig_img.data) {
@@ -259,10 +259,9 @@ int main(int argc, char **argv)
         return -1;
     }
 
-#ifdef ctime
-    clock_t load_img = clock();
-    time = (double) (load_img-after_load_model) / CLOCKS_PER_SEC * 1000.0;
-    printf("##### Image load time : %.2f ms\n", time);
+#ifdef pTime
+    gettimeofday(&tv_3,NULL);
+    printf("\n load_image = %.2f ms\n", (float)((tv_3.tv_sec - tv_2.tv_sec)*1000 + (tv_3.tv_usec - tv_2.tv_usec)*0.001));
 #endif
 
 
@@ -282,21 +281,14 @@ int main(int argc, char **argv)
         return -1;
     }
 
-
-
-
-    // Run
-    printf("rknn_run\n");
-#ifdef ctime
-    clock_t before_run = clock();
-    time = (double) (before_run - load_img) / CLOCKS_PER_SEC * 1000.0;
-    printf("##### Initial data time : %.2f ms\n", time);
+#ifdef pTime
+    gettimeofday(&tv_4,NULL);
+    printf("\n rknn_inputs_set = %.2f ms\n", (float)((tv_4.tv_sec - tv_3.tv_sec)*1000 + (tv_4.tv_usec - tv_3.tv_usec)*0.001));
 #endif
     ret = rknn_run(ctx, nullptr);
-#ifdef ctime
-    clock_t after_run = clock();
-    time = (double) (after_run-before_run) / CLOCKS_PER_SEC * 1000.0;
-    printf("##### Model inference time : %.2f ms\n", time);
+#ifdef pTime
+    gettimeofday(&tv_5,NULL);
+    printf("\n rknn_run = %.2f ms\n", (float)((tv_5.tv_sec - tv_4.tv_sec)*1000 + (tv_5.tv_usec - tv_4.tv_usec)*0.001));
 #endif
     if (ret < 0)
     {
@@ -321,7 +313,7 @@ int main(int argc, char **argv)
     heatmapToKeypoints(buffer, keypoints);
 
 
-#ifndef ctime
+#ifndef pTime
     printf("result: \n");
 	cv::Point point;//特征点，用以画在图像中  
     for(int i =0; i < 17*3;)
@@ -337,10 +329,9 @@ int main(int argc, char **argv)
     // Release rknn_outputs
     rknn_outputs_release(ctx, 1, outputs);
 
-#ifdef ctime
-    clock_t end = clock();
-    time = (double) (end - after_run) / CLOCKS_PER_SEC * 1000.0;
-    printf("##### Postprocess time : %.2f ms\n", time);
+#ifdef pTime
+    gettimeofday(&tv_6,NULL);
+    printf("\n rknn_outputs_get and postprocess = %.2f ms\n", (float)((tv_6.tv_sec - tv_5.tv_sec)*1000 + (tv_6.tv_usec - tv_5.tv_usec)*0.001));
 #endif
     // Release
     if (ctx >= 0)
