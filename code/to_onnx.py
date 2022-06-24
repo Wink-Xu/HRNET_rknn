@@ -127,7 +127,7 @@ if __name__ == '__main__':
     
     model.eval()
 
-    inputs = torch.randn(args.batch_size, 3, cfg.MODEL.IMAGE_SIZE[0], cfg.MODEL.IMAGE_SIZE[1]).cuda()
+    inputs = torch.randn(args.batch_size, 3, cfg.MODEL.IMAGE_SIZE[1], cfg.MODEL.IMAGE_SIZE[0]).cuda()
     onnx_model = export_onnx_model(model, inputs)
 
     model_simp, check = simplify(onnx_model)

@@ -9,7 +9,7 @@ import argparse
 from rknn.api import RKNN
 
 ONNX_MODEL = '../../output/pose_hrnet_w32_256x192.onnx'
-RKNN_MODEL = '../../output/pose_hrnet_w32_256x192.rknn'
+RKNN_MODEL = '../../output/pose_hrnet_w32_256x192_notPre.rknn'
 
 def save_image_with_joints(image, joints_list, file_name):
 
@@ -87,7 +87,7 @@ if __name__ == '__main__':
 
         # Build model
         print('--> Building model')
-        ret = rknn.build(do_quantization=True, dataset='./dataset.txt', pre_compile = True)   ## pre_compile  inferece on device
+        ret = rknn.build(do_quantization=True, dataset='./dataset.txt')#, pre_compile = True)   ## pre_compile  inferece on device
         if ret != 0:
             print('Build pose_hrnet_w32_256x192 failed!')
             exit(ret)
@@ -108,7 +108,7 @@ if __name__ == '__main__':
         # Set inputs
         img = cv2.imread('../../output/test2.jpg')
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        img = cv2.resize(img, (192, 256))
+        img = cv2.resize(img, (256, 192))
 
         # init runtime environment
         print('--> Init runtime environment')
@@ -123,6 +123,8 @@ if __name__ == '__main__':
         outputs = rknn.inference(inputs=[img])
         x = outputs[0] 
         
+        print(x.flatten()[:20])
+
         pred, _ = get_max_preds(x)
         print(pred)
         filename = '../../output/test2_rknn_out.jpg'

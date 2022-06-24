@@ -246,9 +246,9 @@ int main(int argc, char **argv)
     }
 
     cv::Mat img = orig_img.clone();
-    if(orig_img.cols != 256 || orig_img.rows != 192) {
-        printf("resize %d %d to %d %d\n", orig_img.cols, orig_img.rows, 256, 192);
-        cv::resize(orig_img, img, cv::Size(256, 192), (0, 0), (0, 0), cv::INTER_LINEAR);
+    if(orig_img.cols != 192 || orig_img.rows != 256) {
+        printf("resize %d %d to %d %d\n", orig_img.cols, orig_img.rows, 192, 256);
+        cv::resize(orig_img, img, cv::Size(192, 256), (0, 0), (0, 0), cv::INTER_LINEAR);
     }
 #endif
 

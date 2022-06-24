@@ -151,6 +151,8 @@ def main():
             # compute output
 
         input = input.reshape(1, input.shape[0], input.shape[1], input.shape[2])
+        import pdb 
+        pdb.set_trace()
         outputs = model(input)
         if isinstance(outputs, list):
             output = outputs[-1]
